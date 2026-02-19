@@ -1,0 +1,8 @@
+.vs/
+Release/
+Debug/
+*.user
+*.suo
+*.db
+*.opendb
+simple_a.1a8cb8fd/
