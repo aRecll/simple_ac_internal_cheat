@@ -1,6 +1,7 @@
 .vs/
 Release/
 Debug/
+External/
 *.user
 *.suo
 *.db

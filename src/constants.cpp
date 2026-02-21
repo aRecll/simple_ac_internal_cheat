@@ -11,6 +11,12 @@ extern int numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
 
 
 
+// Define the variables here so memory is actually allocated
+_wglSwapBuffers originalSwapBuffers = nullptr;
+_SDL_SetRelativeMouseMode oroginalSetRelativeMouseMode = nullptr;
+
+// ... the rest of your code
+
 
 
 void resertPointers()
