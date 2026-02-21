@@ -16,6 +16,6 @@ extern int numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
 void resertPointers()
 {
     localPlayerPtr = *reinterpret_cast<Player**>(exeBaseAddress + 0x0017E0A8);
-    players = *reinterpret_cast<EntityList**>(playersAddr);
+    players = *reinterpret_cast<EntityList**>(exeBaseAddress + 0x18AC04);
     numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
 }

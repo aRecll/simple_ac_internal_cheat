@@ -28,8 +28,29 @@ bool isInFOV(Player* owner, Vec3 looking) {
 }
 bool isValidTarget(Player* player) {
 
-	return !(player->health > 100 or player->health <= 0 or !isInFOV(localPlayerPtr, player->o)) ? true : false;
+	
+	if (player == nullptr || (uintptr_t)player < 0x1000)
+		return false;
 
+	
+	if (player == localPlayerPtr)
+		return false;
+	
+	if (player->team == localPlayerPtr->team) {
+		return false;
+	}
+
+	
+	if (player->health <= 0 || player->health > 1000)
+		return false;
+
+	
+	if (!isInFOV(localPlayerPtr, player->o))
+		return false;
+
+	
+
+	return true;
 }
 
 Player* ESP::getNearestPlayer()
@@ -37,7 +58,7 @@ Player* ESP::getNearestPlayer()
 	Player* nearestPlayer = nullptr;
 	float nearestDistance = 9999999.0f;
 
-	for (int i = 1; i < numPlayers + 1; i++) {
+	for (int i = 1; i < numPlayers ; i++) {
 		Player* player = players->players[i];
 		if (!isValidTarget(player))
 			continue;
@@ -47,7 +68,7 @@ Player* ESP::getNearestPlayer()
 			nearestPlayer = player;
 		}
 	}
-	return nullptr;
+	return nearestPlayer;
 }
 
 Player* ESP::getNearestEntityAngle()
@@ -60,9 +81,10 @@ Player* ESP::getNearestEntityAngle()
 	Player* nearestPlayer = nullptr;
 	float smallestAngel = 999999.0f;
 
-	for (int i = 1; i < numPlayers + 1; i++) {
+	for (int i = 1; i < numPlayers ; i++) {
+		
 		Player* player = players->players[i];
-		if (!isValidTarget(player))
+		if (isValidTarget(player))
 			continue;
 		vec3 targetAngle = CalcAngle(localPlayerPtr->pos, player->pos);
 		vec3 angleDiff = playerAngle - targetAngle;
@@ -78,14 +100,14 @@ Player* ESP::getNearestEntityAngle()
 
 void ESP::aimbot()
 {
-	if (GetAsyncKeyState(VK_SHIFT))
+	if (!(GetAsyncKeyState(VK_SHIFT) & 0x8000))
 		return;
 
 	Player* target = getNearestEntityAngle();
 	if (target == nullptr)
 		return;
 	Vec3 angle = CalcAngle(localPlayerPtr->pos, target->pos);
-	angle.x += 100;
+	angle.x += 90;
 	localPlayerPtr->yaw = angle.x;
 	localPlayerPtr->pitch = angle.y;
 }
