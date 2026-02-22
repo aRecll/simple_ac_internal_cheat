@@ -5,8 +5,8 @@
 #include "constants.h"
 #include "gl/GL.h"
 #include "gl/GLU.h"
-
-
+#include "esp.h"
+#include "settings.h"
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
@@ -47,21 +47,7 @@ LRESULT CALLBACK newWNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     return (CallWindowProc(origonalWndProc, hWnd, uMsg, wParam, lParam));
 }
 
-void Menu::toggleMenu()
-{   
-   // if (!initialized) return;
-    showMenu = !showMenu;
-    ImGuiIO& io = ImGui::GetIO();
-    if (showMenu) ClipCursor(NULL);
-    originalSetRelativeMouseMode(!showMenu);
-    io.WantCaptureMouse = showMenu;
-    io.WantCaptureKeyboard = showMenu;
-    io.MouseDrawCursor = showMenu;
-    
-    /*if (showMenu) originalSetRelativeMouseMode(false);
-    else originalSetRelativeMouseMode(true);*/
 
-}
 
 void Menu::init(HDC hdc)
 {
@@ -124,6 +110,7 @@ BOOL __stdcall newSwapBuffers(HDC hdc) {
 
     Menu::startRender();
     Menu::render();
+    ESP::drawESP();
     Menu::endRender();
 
    
@@ -146,17 +133,52 @@ void Menu::endRender()
     ImGui::Render();
     ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 }
+void Menu::toggleMenu()
+{
+    // if (!initialized) return;
+    showMenu = !showMenu;
+    ImGuiIO& io = ImGui::GetIO();
+    if (showMenu) ClipCursor(NULL);
+    originalSetRelativeMouseMode(!showMenu);
+    io.WantCaptureMouse = showMenu;
+    io.WantCaptureKeyboard = showMenu;
+    io.MouseDrawCursor = showMenu;
 
+    /*if (showMenu) originalSetRelativeMouseMode(false);
+    else originalSetRelativeMouseMode(true);*/
+
+}
+void espSettings() {
+    if (!ImGui::BeginTabItem("esp"))
+        return;
+
+    ImGui::Checkbox("Enabled", &Settings::ESP::enabled);
+    ImGui::Checkbox("drawTeam", &Settings::ESP::drawTeam);
+    ImGui::ColorEdit4("TeamColor", (float*)&Settings::ESP::mateColor->Value);
+    ImGui::ColorEdit4("enemyColor", (float*)&Settings::ESP::enemyColor->Value);
+    ImGui::EndTabItem();
+}
+void testSeetings() {
+    if (!ImGui::BeginTabItem("Testing"))
+        return;
+    ImGui::Text("he");
+    originalSetRelativeMouseMode(!showMenu);
+    if (ImGui::Button("Tp")) {
+        localPlayerPtr->pos.y += 5;
+    }
+
+    ImGui::EndTabItem();
+}
 void Menu::render()
 {
     if (!showMenu)
         return;
    // ClipCursor(NULL); 
-    ImGui::Begin("menu", &showMenu);
-    ImGui::Text("he");
-    originalSetRelativeMouseMode(!showMenu);
-    if (ImGui::Button("Tp")) {
-        localPlayerPtr->pos.y += 5;
+    ImGui::Begin("Menu",&showMenu);
+    if (ImGui::BeginTabBar("Tool")) {
+        espSettings();
+        testSeetings();
+        ImGui::EndTabBar();
     }
     ImGui::End();
 }

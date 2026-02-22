@@ -45,7 +45,9 @@ using Vec = Vector3;
 using vec = Vector3;
 
 Vec3 OpenGLWorldToScreen(Vec3& pos, const float matrix[16], int windowWidth, int windowHeight);
+Vec3 OpenGLWorldToScreen(Vec3& pos);
 Vec3 DirectXWorldToScreen(Vec3& pos, const float matrix[16], int windowWidth, int windowHeight);
+Vec3 DirectXWorldToScreen(Vec3& pos);
 Vec3 CalcAngle(const Vec3& origin, const Vec3& target, bool invertYaw = false, bool invertPitch = false);
 
 Vec3 DegreesToRadians(const Vec3& vec);

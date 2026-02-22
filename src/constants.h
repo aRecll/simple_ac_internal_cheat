@@ -8,7 +8,8 @@ extern uintptr_t exeBaseAddress;
 extern Player* localPlayerPtr;
 extern EntityList* players;
 extern int numPlayers;
-
+extern float* viewMatrix;
+extern AppResolution* thisResolution;
 void resertPointers();
 
 typedef BOOL(__stdcall* _wglSwapBuffers)(HDC hdc);

@@ -15,15 +15,25 @@ public:
     float yaw;          // 0x0034
     float pitch;        // 0x0038
     float roll;         // 0x003C
-    char pad_0040[172]; // 0x0040
-    int32_t health;     // 0x00EC
-    char pad_00F0[278]; // 0x00F0
-    int8_t N00000315;   // 0x0206
-    char pad_0207[261]; // 0x0207
-    int32_t team;       // 0x030C
+    char pad_0040[16]; // 0x0040
+    float eyeHeaight;     // 0x0050
+    char pad_0054[152]; // 0x0054
+    int32_t health; // 0x00EC
+    char pad_00F0[277];// 0x00F0
+    char name[104];   // 0x0205
+    char pad_026D[159]; // 0x026D
+    int8_t team;       // 0x030C
 };
 
 class EntityList {
 public:
     Player* players[64];
+};
+
+class AppResolution {
+public:
+    int32_t windowWidth;
+    int32_t windowHeight;
+    
+
 };

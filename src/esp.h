@@ -6,7 +6,7 @@ namespace ESP {
 	Player* getNearestEntityAngle();
 	
 	void aimbot();
-
+	void drawESP();
 
 
 }

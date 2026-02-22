@@ -152,6 +152,8 @@
     <ClCompile Include="src\esp.cpp" />
     <ClCompile Include="src\geom.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
+    <ClCompile Include="src\settings.cpp" />
+    <ClCompile Include="src\support.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\imgui\imconfig.h" />
@@ -167,6 +169,8 @@
     <ClInclude Include="src\genCode.h" />
     <ClInclude Include="src\esp.h" />
     <ClInclude Include="src\geom.h" />
+    <ClInclude Include="src\settings.h" />
+    <ClInclude Include="src\support.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
