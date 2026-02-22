@@ -3,7 +3,7 @@
 #include <vector>
 #include "genCode.h"
 
-extern HMODULE hMODULE;
+extern HMODULE hModule;
 extern uintptr_t exeBaseAddress;
 extern Player* localPlayerPtr;
 extern EntityList* players;

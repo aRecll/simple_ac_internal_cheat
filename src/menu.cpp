@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include "menu.h"
 #include "constants.h"
 #include "gl/GL.h"
@@ -45,7 +47,8 @@ LRESULT CALLBACK newWNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 }
 
 void Menu::toggleMenu()
-{
+{   
+    if (!initialized) return;
     showMenu = !showMenu;
     ImGuiIO& io = ImGui::GetIO();
     io.WantCaptureMouse = showMenu;
@@ -71,6 +74,7 @@ void Menu::init()
     ImGui::SetCurrentContext(ImGui::GetCurrentContext());
     ImGui::SetNextWindowSize(initWindowSize);
     initialized = true;
+    std::cout << "menu is init" << std::endl;
 }
 void setupContext(HDC hdc) {
     myContext = wglCreateContext(hdc);
@@ -96,7 +100,7 @@ BOOL __stdcall newSwapBuffers(HDC hdc) {
         Menu::init();
         return originalSwapBuffers(hdc);
     }
-
+    std::cout << "we in newSwapBuffers\n";
     
     gameContext = wglGetCurrentContext();
 

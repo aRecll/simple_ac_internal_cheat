@@ -11,11 +11,10 @@ extern int numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
 
 
 
-// Define the variables here so memory is actually allocated
-_wglSwapBuffers originalSwapBuffers = nullptr;
-_SDL_SetRelativeMouseMode oroginalSetRelativeMouseMode = nullptr;
+_wglSwapBuffers originalSwapBuffers= (_wglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
+_SDL_SetRelativeMouseMode oroginalSetRelativeMouseMode = (_SDL_SetRelativeMouseMode)(GetProcAddress(GetModuleHandle(L"SDL2.dll"), "SDL_SetRelativeMouseMode"));
 
-// ... the rest of your code
+
 
 
 

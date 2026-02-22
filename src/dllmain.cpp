@@ -6,9 +6,9 @@
 #include "esp.h"
 #include "detours/detours.h"
 
-#pragma comment(lib, "detours.lib")
+//#pragma comment(lib, "detours.lib")
 
-HMODULE hMODULE = nullptr;
+
 void aimbot() {
 
     while (1) {
@@ -22,11 +22,11 @@ void aimbot() {
 }
 void hook() {
     Sleep(1000);
-    DisableThreadLibraryCalls(hMODULE);
+    DisableThreadLibraryCalls(hModule);
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
     DetourAttach(&(PVOID&)originalSwapBuffers, newSwapBuffers);
-
+    std::cout << "he in hook\n";
 
 
 }
@@ -36,7 +36,7 @@ void console() {
     freopen_s(&f, "CONOUT$", "w", stdout);
     freopen_s(&f, "CONIN$", "r", stdin);
 
-    std::cout << "Console Created. Type 'help' for commands." << std::endl;
+    std::cout << "Console Created." << std::endl;
 
     std::string input;
     while (true) {
