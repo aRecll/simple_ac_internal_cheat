@@ -15,7 +15,7 @@
 #include "imgui/imgui_impl_opengl2.h"
 #include "imgui/imgui_impl_win32.h"
 
-const ImVec2 initWindowSize = ImVec2(400, 400);
+const ImVec2 initWindowSize = ImVec2(200, 200);
 bool showMenu = false;
 bool initialized = false;
 bool contextCreated = false;
@@ -23,7 +23,7 @@ HWND gameWindow;
 HGLRC myContext;
 HGLRC gameContext;
 HDC gHDC;
-WNDPROC orogonalWndProc = nullptr;
+WNDPROC origonalWndProc = nullptr;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK newWNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -40,10 +40,11 @@ LRESULT CALLBACK newWNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         case WM_LBUTTONUP:
         case WM_RBUTTONDOWN:
         case WM_RBUTTONUP:
+        case WM_INPUT :
             return 0;
         }
 	}
-    return (CallWindowProc(orogonalWndProc, hWnd, uMsg, wParam, lParam));
+    return (CallWindowProc(origonalWndProc, hWnd, uMsg, wParam, lParam));
 }
 
 void Menu::toggleMenu()
@@ -51,32 +52,42 @@ void Menu::toggleMenu()
    // if (!initialized) return;
     showMenu = !showMenu;
     ImGuiIO& io = ImGui::GetIO();
+    if (showMenu) ClipCursor(NULL);
+    originalSetRelativeMouseMode(!showMenu);
     io.WantCaptureMouse = showMenu;
     io.WantCaptureKeyboard = showMenu;
     io.MouseDrawCursor = showMenu;
-    oroginalSetRelativeMouseMode(showMenu);
-
+    
+    /*if (showMenu) originalSetRelativeMouseMode(false);
+    else originalSetRelativeMouseMode(true);*/
 
 }
 
-void Menu::init()
+void Menu::init(HDC hdc)
 {
     ImGui::CreateContext();
-    gameWindow = FindWindowA(NULL, "AssaultCube");
-    orogonalWndProc = (WNDPROC)SetWindowLongPtr(gameWindow, GWLP_WNDPROC, (LONG_PTR)newWNDPROC);
+    gameWindow= WindowFromDC(hdc);
+   // gameWindow = FindWindowA(NULL, "AssaultCube");
+    origonalWndProc = (WNDPROC)SetWindowLongPtr(gameWindow, GWLP_WNDPROC, (LONG_PTR)newWNDPROC);
+
+
     ImGui_ImplWin32_Init(gameWindow);
     ImGui_ImplOpenGL2_Init();
     ImGui::StyleColorsClassic();
+
+
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
+   io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
     io.Fonts->AddFontDefault();
+
+
     ImGui::SetCurrentContext(ImGui::GetCurrentContext());
     ImGui::SetNextWindowSize(initWindowSize);
     initialized = true;
-    std::cout << "menu is init" << std::endl;
+   // std::cout << "menu is init" << std::endl;
 }
-void setupContext(HDC hdc) {
+void setupContext(HDC &hdc) {
     myContext = wglCreateContext(hdc);
     wglMakeCurrent(hdc, myContext);
 
@@ -97,16 +108,16 @@ void setupContext(HDC hdc) {
 }
 BOOL __stdcall newSwapBuffers(HDC hdc) {
     if (!initialized) {
-        Menu::init();
+        Menu::init(hdc);
         return originalSwapBuffers(hdc);
     }
   //  std::cout << "we in newSwapBuffers\n";
     
     gameContext = wglGetCurrentContext();
 
-    if (!contextCreated) {
+    if (!contextCreated) 
         setupContext(hdc);
-    }
+    
 
    
     wglMakeCurrent(hdc, myContext);
@@ -140,13 +151,25 @@ void Menu::render()
 {
     if (!showMenu)
         return;
+   // ClipCursor(NULL); 
     ImGui::Begin("menu", &showMenu);
     ImGui::Text("he");
-    oroginalSetRelativeMouseMode(!showMenu);
+    originalSetRelativeMouseMode(!showMenu);
     if (ImGui::Button("Tp")) {
         localPlayerPtr->pos.y += 5;
     }
     ImGui::End();
 }
+BOOL WINAPI hClipCursor(const RECT* lpRect) {
+    if (showMenu) return oClipCursor(NULL); 
+    return oClipCursor(lpRect);
+}
 
-
+BOOL WINAPI hSetCursorPos(int X, int Y) {
+    if (showMenu) {
+        
+        return TRUE;
+    }
+   
+    return oSetCursorPos(X, Y);
+}

@@ -7,7 +7,7 @@
 #include "detours/detours.h"
 
 //#pragma comment(lib, "detours.lib")
-
+//#define DEBUG
 
 void aimbot() {
 
@@ -15,7 +15,7 @@ void aimbot() {
         resertPointers();
         ESP::aimbot();
         Sleep(50);
-        if (GetAsyncKeyState(VK_DELETE)) {
+        if (GetAsyncKeyState(VK_DELETE) & 0x8000) {
             Menu::toggleMenu();
         }
     }
@@ -26,8 +26,22 @@ void hook() {
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
     DetourAttach(&(PVOID&)originalSwapBuffers, newSwapBuffers);
+   /* DetourAttach(&(PVOID&)oClipCursor, hClipCursor);
+    DetourAttach(&(PVOID&)oSetCursorPos, hSetCursorPos);*/
     DetourTransactionCommit();
    // std::cout << "he in hook\n";
+
+
+}
+void forDebug() {
+    while (1) {
+        resertPointers();
+       // ESP::aimbot();
+        Sleep(50);
+        if (GetAsyncKeyState(VK_DELETE) & 0x8000) {
+            Menu::toggleMenu();
+        }
+    }
 
 
 }
@@ -90,6 +104,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)console, nullptr, 0, nullptr);
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)hook, nullptr, 0, nullptr);
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)aimbot, nullptr, 0, nullptr);
+#ifdef DEBUG
+        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)forDebug, nullptr, 0, nullptr);
+#endif // DEBUG
+
+       
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:

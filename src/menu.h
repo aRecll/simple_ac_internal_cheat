@@ -3,7 +3,7 @@
 
 namespace Menu {
 	void toggleMenu();
-	void init();
+	void init(HDC hdc);
 	void startRender();
 	void endRender();
 
@@ -14,3 +14,5 @@ namespace Menu {
 
 }
 BOOL __stdcall newSwapBuffers(HDC hdc);
+BOOL WINAPI hClipCursor(const RECT* lpRect);
+BOOL WINAPI hSetCursorPos(int X, int Y);

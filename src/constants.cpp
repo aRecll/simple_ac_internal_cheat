@@ -11,13 +11,21 @@ extern int numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
 
 
 
-_wglSwapBuffers originalSwapBuffers= (_wglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
-_SDL_SetRelativeMouseMode oroginalSetRelativeMouseMode = (_SDL_SetRelativeMouseMode)(GetProcAddress(GetModuleHandle(L"SDL2.dll"), "SDL_SetRelativeMouseMode"));
+_wglSwapBuffers originalSwapBuffers= 
+(_wglSwapBuffers)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
 
 
+_SDL_SetRelativeMouseMode originalSetRelativeMouseMode = 
+(_SDL_SetRelativeMouseMode)(GetProcAddress(GetModuleHandle(L"SDL2.dll"), "SDL_SetRelativeMouseMode"));
+
+//tSetCursorPos oSetCursorPos = (tSetCursorPos)GetProcAddress(GetModuleHandle(L"user32.dll"), "tSetCursorPos");
+
+tClipCursor oClipCursor = 
+(tClipCursor)GetProcAddress(GetModuleHandle(L"user32.dll"), "ClipCursor");
 
 
-
+tSetCursorPos oSetCursorPos = 
+(tSetCursorPos)GetProcAddress(GetModuleHandle(L"user32.dll"), "SetCursorPos");
 void resertPointers()
 {
     localPlayerPtr = *reinterpret_cast<Player**>(exeBaseAddress + 0x0017E0A8);
