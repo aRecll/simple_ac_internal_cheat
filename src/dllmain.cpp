@@ -26,7 +26,8 @@ void hook() {
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
     DetourAttach(&(PVOID&)originalSwapBuffers, newSwapBuffers);
-    std::cout << "he in hook\n";
+    DetourTransactionCommit();
+   // std::cout << "he in hook\n";
 
 
 }

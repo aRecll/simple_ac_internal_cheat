@@ -48,7 +48,7 @@ LRESULT CALLBACK newWNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 void Menu::toggleMenu()
 {   
-    if (!initialized) return;
+   // if (!initialized) return;
     showMenu = !showMenu;
     ImGuiIO& io = ImGui::GetIO();
     io.WantCaptureMouse = showMenu;
@@ -100,7 +100,7 @@ BOOL __stdcall newSwapBuffers(HDC hdc) {
         Menu::init();
         return originalSwapBuffers(hdc);
     }
-    std::cout << "we in newSwapBuffers\n";
+  //  std::cout << "we in newSwapBuffers\n";
     
     gameContext = wglGetCurrentContext();
 
