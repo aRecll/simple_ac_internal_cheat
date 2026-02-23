@@ -6,6 +6,7 @@
 #include "gl/GL.h"
 #include "gl/GLU.h"
 #include "../features/esp.h"
+#include "../features/aimbot.h"
 #include "settings.h"
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
@@ -111,6 +112,7 @@ BOOL __stdcall newSwapBuffers(HDC hdc) {
     Menu::startRender();
     Menu::render();
     ESP::drawESP();
+    aim::aimbot();
     Menu::endRender();
 
    
@@ -148,6 +150,31 @@ void Menu::toggleMenu()
     else originalSetRelativeMouseMode(true);*/
 
 }
+void aimbotSettings() {
+    if (!ImGui::BeginTabItem("Aimbot"))
+        return;
+    ImGui::Checkbox("Enabled", &Settings::Aimbot::enabled);
+    ImGui::Checkbox("Smoothing", &Settings::Aimbot::smoothing);
+    if (Settings::Aimbot::smoothing) {
+        ImGui::SameLine(100);
+        ImGui::SetNextItemWidth(300);
+        ImGui::SliderFloat("Smoothing Amount", &Settings::Aimbot::smoothingAmount, 0.1f, 1.0f);
+    }
+        
+    
+    ImGui::Checkbox("Check In Fov", &Settings::Aimbot::checkInFov);
+    if (Settings::Aimbot::checkInFov) {
+        
+        ImGui::Indent(16.0f);
+        ImGui::SliderFloat("Fov", &Settings::Aimbot::fov, 90.0f, 500.0f);
+        
+        
+        ImGui::Checkbox("Draw Fov Circle", &Settings::Aimbot::drawFovCircle);
+        ImGui::Unindent(16.0f);
+    }
+        
+    ImGui::EndTabItem();
+}
 void espSettings() {
     if (!ImGui::BeginTabItem("esp"))
         return;
@@ -178,6 +205,7 @@ void Menu::render()
     if (ImGui::BeginTabBar("Tool")) {
         espSettings();
         testSeetings();
+        aimbotSettings();
         ImGui::EndTabBar();
     }
     ImGui::End();

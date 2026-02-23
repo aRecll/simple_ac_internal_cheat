@@ -23,7 +23,6 @@
 //}
 
 
-
 void drawCenterText(std::string text, float x, float y) {
 	float textWidth = ImGui::CalcTextSize(text.c_str()).x;
 	ImGui::GetBackgroundDrawList()->AddText(ImVec2(x - textWidth, y), IM_COL32(1, 1, 100, 255), text.c_str());
@@ -39,6 +38,36 @@ void drawScallingBar(float x1,float y1, float x2,float width, float y2,float val
 
 
 
+}
+void drawScalingBarVertical(float x1, float y1, float x2, float y2, float thickness, ImVec4 color, float val, float max) {
+	// Вычисляем разницу высоты. В ImGui Y идет сверху вниз.
+	// Если y1 — это низ (bottom), а y2 — это верх (top), то heightDiff будет отрицательным.
+	float heightDiff = y2 - y1;
+
+	// Вычисляем размер заполненной части
+	float scaledHeight = heightDiff * (val / max);
+
+	// 1. Рисуем фон (черный контур/задник)
+	// Используем GetBackgroundDrawList или GetWindowDrawList в зависимости от того, где рисуешь
+	ImGui::GetBackgroundDrawList()->AddRect(
+		ImVec2(x1, y1),
+		ImVec2(x2, y2),
+		IM_COL32(0, 0, 0, 255), // Черный цвет
+		0.0f,                   // Скругление
+		0,                      // Флаги скругления
+		thickness               // Толщина обводки
+	);
+
+	// 2. Рисуем заполнение (Health Bar)
+	// Преобразуем ImVec4 в формат ImU32, который понимает AddRectFilled
+	ImU32 col32 = ImGui::ColorConvertFloat4ToU32(color);
+
+	// Рисуем от нижней точки (y1) до (y1 + scaledHeight)
+	ImGui::GetBackgroundDrawList()->AddRectFilled(
+		ImVec2(x1, y1),
+		ImVec2(x2, y1 + scaledHeight),
+		col32
+	);
 }
 void ESP::drawESP()
 {	
@@ -69,8 +98,10 @@ void ESP::drawESP()
 		ImColor currColor = teammate ? *Settings::ESP::enemyColor : *Settings::ESP::mateColor;
 
 		ImGui::GetBackgroundDrawList()->AddQuad(topLeft, bottomLeft, bottomRight, topRight, currColor, 1.0f);
+	
 		//drawScallingBar(bottomLeft.x - 5, -width / 2, bottomLeft.y, bottomLeft.x - 5, topRight.y, 1,100, ImColor(255,0,0,255));
-
+		drawScalingBarVertical(bottomLeft.x - 5 - width / 2, bottomLeft.y, bottomLeft.x - 5, topRight.y, 1, ImVec4(0, 1, 0, 1), player->health, 100);
+		drawCenterText(player->name, feetScreenPose.x, feetScreenPose.y);
 	}
 
 }

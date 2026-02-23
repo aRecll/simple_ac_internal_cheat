@@ -10,29 +10,25 @@
 //#pragma comment(lib, "detours.lib")
 //#define DEBUG
 
-void aimbot() {
-    
-    while (1) {
-        resertPointers();
-        aim::aimbot();
-        Sleep(50);
-        if (IsKeyPressed(VK_DELETE)) {
-            Menu::toggleMenu();
-        }
-       
-    }
-    
-}
+
 void hook() {
     Sleep(1000);
     DisableThreadLibraryCalls(hModule);
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
     DetourAttach(&(PVOID&)originalSwapBuffers, newSwapBuffers);
-   DetourAttach(&(PVOID&)oClipCursor, hClipCursor);
+    DetourAttach(&(PVOID&)oClipCursor, hClipCursor);
     DetourAttach(&(PVOID&)oSetCursorPos, hSetCursorPos);
     DetourTransactionCommit();
+    while (1) {
+        resertPointers();
+        
+        Sleep(50);
+        if (IsKeyPressed(VK_DELETE)) {
+            Menu::toggleMenu();
+        }
 
+    }
    //std::cout << thisResolution->windowHeight << std::endl;
 
 
@@ -107,7 +103,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     case DLL_PROCESS_ATTACH:
        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)console, nullptr, 0, nullptr);
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)hook, nullptr, 0, nullptr);
-        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)aimbot, nullptr, 0, nullptr);
+       // CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)aimbot, nullptr, 0, nullptr);
 #ifdef DEBUG
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)forDebug, nullptr, 0, nullptr);
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)console, nullptr, 0, nullptr);

@@ -10,8 +10,9 @@ extern EntityList* players;
 extern int numPlayers;
 extern float* viewMatrix;
 extern AppResolution* thisResolution;
+extern float FOV;
 void resertPointers();
-
+extern vec3 centerScreenPos;
 typedef BOOL(__stdcall* _wglSwapBuffers)(HDC hdc);
 extern _wglSwapBuffers originalSwapBuffers;
 
@@ -24,4 +25,4 @@ extern tSetCursorPos oSetCursorPos;
 typedef BOOL(WINAPI* tClipCursor)(const RECT* lpRect);
 extern tClipCursor oClipCursor;
 
-const float FOV = 90;
+
