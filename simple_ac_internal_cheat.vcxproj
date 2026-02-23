@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\utils\computingfunc.cpp" />
+    <ClCompile Include="src\features\aimbot.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\imgui\imgui_draw.cpp" />
@@ -146,16 +148,18 @@
     <ClCompile Include="external\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\menu.cpp" />
-    <ClCompile Include="src\constants.cpp" />
-    <ClCompile Include="src\genCode.cpp" />
-    <ClCompile Include="src\esp.cpp" />
-    <ClCompile Include="src\geom.cpp" />
+    <ClCompile Include="src\menu\menu.cpp" />
+    <ClCompile Include="src\offsets\constants.cpp" />
+    <ClCompile Include="src\offsets\genCode.cpp" />
+    <ClCompile Include="src\features\esp.cpp" />
+    <ClCompile Include="src\utils\geom.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
-    <ClCompile Include="src\settings.cpp" />
-    <ClCompile Include="src\support.cpp" />
+    <ClCompile Include="src\menu\settings.cpp" />
+    <ClCompile Include="src\utils\support.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utils\computingfunc.h" />
+    <ClInclude Include="src\features\aimbot.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
     <ClInclude Include="external\imgui\imgui_impl_opengl2.h" />
@@ -164,13 +168,13 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\menu.h" />
-    <ClInclude Include="src\constants.h" />
-    <ClInclude Include="src\genCode.h" />
-    <ClInclude Include="src\esp.h" />
-    <ClInclude Include="src\geom.h" />
-    <ClInclude Include="src\settings.h" />
-    <ClInclude Include="src\support.h" />
+    <ClInclude Include="src\menu\menu.h" />
+    <ClInclude Include="src\offsets\constants.h" />
+    <ClInclude Include="src\offsets\genCode.h" />
+    <ClInclude Include="src\features\esp.h" />
+    <ClInclude Include="src\utils\geom.h" />
+    <ClInclude Include="src\menu\settings.h" />
+    <ClInclude Include="src\utils\support.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

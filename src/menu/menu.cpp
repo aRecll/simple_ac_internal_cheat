@@ -2,10 +2,10 @@
 #include <iostream>
 
 #include "menu.h"
-#include "constants.h"
+#include "../offsets/constants.h"
 #include "gl/GL.h"
 #include "gl/GLU.h"
-#include "esp.h"
+#include "../features/esp.h"
 #include "settings.h"
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")

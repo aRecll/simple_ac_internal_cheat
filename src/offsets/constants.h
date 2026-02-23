@@ -24,4 +24,4 @@ extern tSetCursorPos oSetCursorPos;
 typedef BOOL(WINAPI* tClipCursor)(const RECT* lpRect);
 extern tClipCursor oClipCursor;
 
-
+const float FOV = 90;

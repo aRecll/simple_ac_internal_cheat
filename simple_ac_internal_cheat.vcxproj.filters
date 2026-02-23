@@ -18,16 +18,16 @@
     <ClCompile Include="src\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\geom.cpp">
+    <ClCompile Include="src\utils\geom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\esp.cpp">
+    <ClCompile Include="src\features\esp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\genCode.cpp">
+    <ClCompile Include="src\offsets\genCode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\constants.cpp">
+    <ClCompile Include="src\offsets\constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="external\imgui\imgui.cpp">
@@ -51,27 +51,33 @@
     <ClCompile Include="external\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\menu.cpp">
+    <ClCompile Include="src\menu\menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\support.cpp">
+    <ClCompile Include="src\utils\support.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\settings.cpp">
+    <ClCompile Include="src\menu\settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\features\aimbot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\computingfunc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\geom.h">
+    <ClInclude Include="src\utils\geom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\esp.h">
+    <ClInclude Include="src\features\esp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\genCode.h">
+    <ClInclude Include="src\offsets\genCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\constants.h">
+    <ClInclude Include="src\offsets\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="external\imgui\imconfig.h">
@@ -98,13 +104,19 @@
     <ClInclude Include="external\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\menu.h">
+    <ClInclude Include="src\menu\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\support.h">
+    <ClInclude Include="src\utils\support.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\settings.h">
+    <ClInclude Include="src\menu\settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\features\aimbot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\computingfunc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,8 @@ namespace Settings {
 
 	namespace Aimbot {
 		extern bool enabled;
+		extern bool smoothing;
+
 
 	}
 

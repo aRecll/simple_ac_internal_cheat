@@ -1,11 +1,12 @@
 #include <iostream>
 #include <windows.h>
-#include "menu.h"
-#include "constants.h"
-#include "genCode.h"
-#include "esp.h"
+#include "menu/menu.h"
+#include "offsets/constants.h"
+#include "offsets/genCode.h"
+#include "features/esp.h"
 #include "detours/detours.h"
-#include "support.h"
+#include "utils/support.h"
+#include "features/aimbot.h"
 //#pragma comment(lib, "detours.lib")
 //#define DEBUG
 
@@ -13,7 +14,7 @@ void aimbot() {
     
     while (1) {
         resertPointers();
-        ESP::aimbot();
+        aim::aimbot();
         Sleep(50);
         if (IsKeyPressed(VK_DELETE)) {
             Menu::toggleMenu();

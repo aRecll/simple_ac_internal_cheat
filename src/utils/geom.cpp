@@ -2,7 +2,7 @@
 #include <cmath>
 #include <string>
 #include <format>
-#include "constants.h"
+#include "../offsets/constants.h"
 // Calculates clip coordinates based on OpenGL's model-view-projection matrix and converts them to screen space
 bool OpenGLWorldToScreen(vec3 pos, vec3& screen, const float matrix[16], int windowWidth, int windowHeight)
 {
