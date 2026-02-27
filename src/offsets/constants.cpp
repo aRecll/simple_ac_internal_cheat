@@ -8,6 +8,7 @@ Player* localPlayerPtr = *reinterpret_cast<Player**>(exeBaseAddress + 0x0017E0A8
 uintptr_t playersAddr = exeBaseAddress + 0x18AC04;
 EntityList* players = *(EntityList**)(playersAddr);
 int numPlayers = *reinterpret_cast<int*>(exeBaseAddress + 0x18AC0C);
+float* pFOV = reinterpret_cast<float*>(exeBaseAddress + 0x18A7CC);
 float FOV= *reinterpret_cast<int*>(exeBaseAddress + 0x18A7CC);
 
 

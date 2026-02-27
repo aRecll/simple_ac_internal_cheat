@@ -1,12 +1,13 @@
 #include "esp.h"
 #include "../offsets/constants.h"
+#include "../offsets/gencode.h"
 #include <stdio.h>
 #include "../utils/geom.h"
 #include "../menu/settings.h"
 #include "imgui/imgui.h"
 #include <iostream>
 #include "../utils/computingfunc.h"
-#include "../offsets/gencode.h"
+
 
 //void normalizeAngle(vec3& angle) {
 //	if (angle.x > 360)
@@ -40,29 +41,20 @@ void drawScallingBar(float x1,float y1, float x2,float width, float y2,float val
 
 }
 void drawScalingBarVertical(float x1, float y1, float x2, float y2, float thickness, ImVec4 color, float val, float max) {
-	// Вычисляем разницу высоты. В ImGui Y идет сверху вниз.
-	// Если y1 — это низ (bottom), а y2 — это верх (top), то heightDiff будет отрицательным.
+	
 	float heightDiff = y2 - y1;
 
-	// Вычисляем размер заполненной части
+	
 	float scaledHeight = heightDiff * (val / max);
 
-	// 1. Рисуем фон (черный контур/задник)
-	// Используем GetBackgroundDrawList или GetWindowDrawList в зависимости от того, где рисуешь
-	ImGui::GetBackgroundDrawList()->AddRect(
-		ImVec2(x1, y1),
-		ImVec2(x2, y2),
-		IM_COL32(0, 0, 0, 255), // Черный цвет
-		0.0f,                   // Скругление
-		0,                      // Флаги скругления
-		thickness               // Толщина обводки
-	);
+	
+	ImGui::GetBackgroundDrawList()->AddRect(ImVec2(x1, y1),ImVec2(x2, y2),IM_COL32(0, 0, 0, 255), 0.0f,0,thickness);
 
-	// 2. Рисуем заполнение (Health Bar)
-	// Преобразуем ImVec4 в формат ImU32, который понимает AddRectFilled
+
+
 	ImU32 col32 = ImGui::ColorConvertFloat4ToU32(color);
 
-	// Рисуем от нижней точки (y1) до (y1 + scaledHeight)
+	
 	ImGui::GetBackgroundDrawList()->AddRectFilled(
 		ImVec2(x1, y1),
 		ImVec2(x2, y1 + scaledHeight),
@@ -83,7 +75,7 @@ void ESP::drawESP()
 		if (teammate and !Settings::ESP::drawTeam)
 			continue;
 		vec3 headPos = { player->o.x,player->o.y,player->o.z };
-		vec3 feetPos = { player->o.x,player->o.y,player->o.z- player->eyeHeaight };
+		vec3 feetPos = { player->o.x,player->o.y,player->o.z- player->eyeHeight };
 		vec3 headScreenPose = OpenGLWorldToScreen(headPos);
 		vec3 feetScreenPose = OpenGLWorldToScreen(feetPos);
 		

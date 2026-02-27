@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\features\changestats.cpp" />
+    <ClCompile Include="src\menu\menutabs.cpp" />
     <ClCompile Include="src\utils\computingfunc.cpp" />
     <ClCompile Include="src\features\aimbot.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
@@ -158,6 +160,9 @@
     <ClCompile Include="src\utils\support.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\features\changestats.h" />
+    <ClInclude Include="src\menu\menutabs.h" />
+    <ClInclude Include="src\offsets\genCode.h" />
     <ClInclude Include="src\utils\computingfunc.h" />
     <ClInclude Include="src\features\aimbot.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
@@ -170,7 +175,6 @@
     <ClInclude Include="external\imgui\imstb_truetype.h" />
     <ClInclude Include="src\menu\menu.h" />
     <ClInclude Include="src\offsets\constants.h" />
-    <ClInclude Include="src\offsets\genCode.h" />
     <ClInclude Include="src\features\esp.h" />
     <ClInclude Include="src\utils\geom.h" />
     <ClInclude Include="src\menu\settings.h" />

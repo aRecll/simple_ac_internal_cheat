@@ -8,6 +8,7 @@
 #include "../features/esp.h"
 #include "../features/aimbot.h"
 #include "settings.h"
+#include "menutabs.h"
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
@@ -72,7 +73,9 @@ void Menu::init(HDC hdc)
     ImGui::SetCurrentContext(ImGui::GetCurrentContext());
     ImGui::SetNextWindowSize(initWindowSize);
     initialized = true;
-   // std::cout << "menu is init" << std::endl;
+#ifdef _DEBUG
+   std::cout << "menu is init" << std::endl;
+#endif
 }
 void setupContext(HDC &hdc) {
     myContext = wglCreateContext(hdc);
@@ -136,7 +139,7 @@ void Menu::endRender()
     ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 }
 void Menu::toggleMenu()
-{
+{   
     // if (!initialized) return;
     showMenu = !showMenu;
     ImGuiIO& io = ImGui::GetIO();
@@ -145,57 +148,14 @@ void Menu::toggleMenu()
     io.WantCaptureMouse = showMenu;
     io.WantCaptureKeyboard = showMenu;
     io.MouseDrawCursor = showMenu;
-
+#ifdef _DEBUG
+    std::cout << "menu switch" << std::endl;
+#endif
     /*if (showMenu) originalSetRelativeMouseMode(false);
     else originalSetRelativeMouseMode(true);*/
 
 }
-void aimbotSettings() {
-    if (!ImGui::BeginTabItem("Aimbot"))
-        return;
-    ImGui::Checkbox("Enabled", &Settings::Aimbot::enabled);
-    ImGui::Checkbox("Smoothing", &Settings::Aimbot::smoothing);
-    if (Settings::Aimbot::smoothing) {
-        ImGui::SameLine(100);
-        ImGui::SetNextItemWidth(300);
-        ImGui::SliderFloat("Smoothing Amount", &Settings::Aimbot::smoothingAmount, 0.1f, 1.0f);
-    }
-        
-    
-    ImGui::Checkbox("Check In Fov", &Settings::Aimbot::checkInFov);
-    if (Settings::Aimbot::checkInFov) {
-        
-        ImGui::Indent(16.0f);
-        ImGui::SliderFloat("Fov", &Settings::Aimbot::fov, 90.0f, 500.0f);
-        
-        
-        ImGui::Checkbox("Draw Fov Circle", &Settings::Aimbot::drawFovCircle);
-        ImGui::Unindent(16.0f);
-    }
-        
-    ImGui::EndTabItem();
-}
-void espSettings() {
-    if (!ImGui::BeginTabItem("esp"))
-        return;
 
-    ImGui::Checkbox("Enabled", &Settings::ESP::enabled);
-    ImGui::Checkbox("drawTeam", &Settings::ESP::drawTeam);
-    ImGui::ColorEdit4("TeamColor", (float*)&Settings::ESP::mateColor->Value);
-    ImGui::ColorEdit4("enemyColor", (float*)&Settings::ESP::enemyColor->Value);
-    ImGui::EndTabItem();
-}
-void testSeetings() {
-    if (!ImGui::BeginTabItem("Testing"))
-        return;
-    ImGui::Text("he");
-    originalSetRelativeMouseMode(!showMenu);
-    if (ImGui::Button("Tp")) {
-        localPlayerPtr->pos.y += 5;
-    }
-
-    ImGui::EndTabItem();
-}
 void Menu::render()
 {
     if (!showMenu)
@@ -203,9 +163,10 @@ void Menu::render()
    // ClipCursor(NULL); 
     ImGui::Begin("Menu",&showMenu);
     if (ImGui::BeginTabBar("Tool")) {
-        espSettings();
-        testSeetings();
-        aimbotSettings();
+        espTab();
+        statsTab();
+        aimbotTab();
+        testTab();
         ImGui::EndTabBar();
     }
     ImGui::End();

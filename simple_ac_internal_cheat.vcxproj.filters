@@ -66,15 +66,18 @@
     <ClCompile Include="src\utils\computingfunc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\menu\menutabs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\features\changestats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\utils\geom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\features\esp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\offsets\genCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\offsets\constants.h">
@@ -117,6 +120,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\computingfunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\offsets\genCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu\menutabs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\features\changestats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

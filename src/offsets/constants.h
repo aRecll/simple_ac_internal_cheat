@@ -10,6 +10,7 @@ extern EntityList* players;
 extern int numPlayers;
 extern float* viewMatrix;
 extern AppResolution* thisResolution;
+extern float* pFOV;
 extern float FOV;
 void resertPointers();
 extern vec3 centerScreenPos;

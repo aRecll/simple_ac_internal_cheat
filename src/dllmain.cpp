@@ -7,6 +7,7 @@
 #include "detours/detours.h"
 #include "utils/support.h"
 #include "features/aimbot.h"
+#include "features/changestats.h"
 //#pragma comment(lib, "detours.lib")
 //#define DEBUG
 
@@ -19,9 +20,18 @@ void hook() {
     DetourAttach(&(PVOID&)originalSwapBuffers, newSwapBuffers);
     DetourAttach(&(PVOID&)oClipCursor, hClipCursor);
     DetourAttach(&(PVOID&)oSetCursorPos, hSetCursorPos);
+
     DetourTransactionCommit();
+#ifdef _DEBUG
+    std::cout << "hook are complited" << std::endl;
+#endif
     while (1) {
         resertPointers();
+        if (Settings::Stats::infinityAmmo or Settings::Stats::infinityHealt) {
+            updateStats();
+        }
+       updateFOV();
+       updateSpeedOfShuts();
         
         Sleep(50);
         if (IsKeyPressed(VK_DELETE)) {
@@ -36,6 +46,7 @@ void hook() {
 void forDebug() {
     while (1) {
         resertPointers();
+        
        // ESP::aimbot();
         Sleep(50);
         if (GetAsyncKeyState(VK_DELETE) & 0x8000) {
@@ -50,46 +61,16 @@ void console() {
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
     freopen_s(&f, "CONIN$", "r", stdin);
-
+#ifdef _DEBUG
     std::cout << "Console Created." << std::endl;
-
-    std::string input;
-    while (true) {
-        std::cout << "> ";
-        std::cin >> input;
-        
-        if (input == "exit") break;
-
-       
-        
-
-        if (input == "up" ) {
-            localPlayerPtr->pos.y += 5.0f;
-        }
-        else if (input == "down" ) {
-            localPlayerPtr->pos.y -= 5.0f;
-        }
-        else if (input == "print") {
-            std::cout << "Local Player Ptr: " << localPlayerPtr << std::endl;
-        }
-        else if (input == "amount") {
-            std::cout << "Number of players: " << numPlayers << std::endl;
-        }
-        else if (input == "ent" && players) {
-            for (int i = 0; i < numPlayers; i++) {
-                auto entity = players->players[i];
-
-                
-                if (!entity || !entity->vtable) continue;
-
-                std::cout << "Entity [" << i << "] Pos: "
-                    << entity->pos.x << ", "
-                    << entity->pos.y << ", "
-                    << entity->pos.z << std::endl;
-            }
-        }
+#endif
+    while (1) {
+        std::cout << localPlayerPtr->shotgunDelay << std::endl;
+        std::cout << localPlayerPtr->rifleDelay << std::endl;
+        std::cout << localPlayerPtr->sniperDelay << std::endl;
+        std::cout << "\n\n\n\n\n" << std::endl;
     }
-
+    
     FreeConsole();
 }
 
@@ -101,11 +82,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-       CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)console, nullptr, 0, nullptr);
+       
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)hook, nullptr, 0, nullptr);
        // CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)aimbot, nullptr, 0, nullptr);
-#ifdef DEBUG
-        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)forDebug, nullptr, 0, nullptr);
+#ifdef _DEBUG
+        
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)console, nullptr, 0, nullptr);
 #endif // DEBUG
 
